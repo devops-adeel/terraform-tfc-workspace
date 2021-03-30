@@ -13,7 +13,7 @@ Usage:
 ```hcl
 
 module "terraform_workspace" {
-  source               = "git::https://github.com/devops-adeel/terraform-tfc-module.git?ref=v0.1.0"
+  source               = "git::https://github.com/devops-adeel/terraform-tfc-workspace.git?ref=v0.1.0"
   application_name     = local.application_name
   vault_namespace      = local.namespace
   username             = var.username
@@ -27,7 +27,8 @@ module "terraform_workspace" {
 
 ## Requirements
 
-No requirements.
+Vault is required as well as having setup Vault TFC Secrets Engine, see
+[here](https://github.com/devops-adeel/terraform-vault-secrets-tfc.git)
 
 ## Providers
 
