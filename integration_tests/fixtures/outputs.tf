@@ -1,15 +1,19 @@
 output "token" {
-  value = vault_approle_auth_backend_login.default.client_token
+  description = "Terraform workspace token"
+  value       = vault_terraform_cloud_secret_creds.default.token
 }
 
 output "url" {
-  value = var.vault_address
+  description = "Terraform Cloud URL"
+  value       = "https://app.terraform.io"
 }
 
-output "namespace" {
-  value = "admin/terraform-vault-secrets-something/"
+output "workspace" {
+  description = "TFC Workspace ID"
+  value       = module.default.workspace_id
 }
 
-output "path" {
-  value = "abritrary path"
+output "team_id" {
+  description = "Terraform Cloud Team ID"
+  value       = module.default.tfc_team_id
 }
