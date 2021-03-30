@@ -2,7 +2,6 @@ module "default" {
   source               = "./module"
   application_name     = local.application_name
   vault_namespace      = local.namespace
-  email                = var.email
   username             = var.username
   vault_address        = var.vault_address
   organization         = var.organization
@@ -27,4 +26,9 @@ module "vault_approle" {
   env              = local.env
   service          = local.service
   mount_accessor   = data.vault_auth_backend.default.accessor
+}
+
+resource "vault_terraform_cloud_secret_creds" "default" {
+  backend = module.tfc_secrets.backend_path
+  role    = module.default.tfc_secret_role
 }

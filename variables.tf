@@ -1,8 +1,3 @@
-variable "email" {
-  description = "Email address of TFC user"
-  type        = string
-}
-
 variable "username" {
   description = "TFC username"
   type        = string
@@ -41,6 +36,6 @@ variable "backend_path" {
 }
 
 variable "organization" {
-  description = "TFC Organisation"
-  type = string
+  description = "TFC Organisation."
+  type        = string
 }

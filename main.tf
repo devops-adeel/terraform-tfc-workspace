@@ -7,7 +7,6 @@
  *   source               = "git::https://github.com/devops-adeel/terraform-tfc-module.git?ref=v0.1.0"
  *   application_name     = local.application_name
  *   vault_namespace      = local.namespace
- *   email                = var.email
  *   username             = var.username
  *   vault_address        = var.vault_address
  *   organization         = var.organization
@@ -19,14 +18,9 @@
  */
 
 
-data "tfe_organization_membership" "default" {
-  organization = var.organization
-  email        = var.email
-}
-
 resource "tfe_team" "default" {
   name         = var.application_name
-  organization = data.tfe_organization_membership.default.organization
+  organization = var.organization
 }
 
 resource "tfe_team_member" "default" {
@@ -36,7 +30,7 @@ resource "tfe_team_member" "default" {
 
 resource "tfe_workspace" "default" {
   name                  = var.application_name
-  organization          = data.tfe_organization_membership.default.organization
+  organization          = var.organization
   allow_destroy_plan    = true
   execution_mode        = "remote"
   file_triggers_enabled = false
@@ -101,6 +95,6 @@ resource "tfe_variable" "vault_address" {
 resource "vault_terraform_cloud_secret_role" "default" {
   backend      = var.backend_path
   name         = var.application_name
-  organization = data.tfe_organization_membership.default.organization
+  organization = var.organization
   team_id      = tfe_team.default.id
 }
