@@ -7,30 +7,51 @@
 content = inspec.profile.file('terraform.json')
 params = JSON.parse(content)
 
-token     = params['token']['value']
-url       = params['url']['value']
-namespace = params['namespace']['value']
-path      = params['path']['value']
+token               = params['token']['value']
+url                 = params['url']['value']
+workspace           = params['workspace']['value']
+team_id             = params['team_id']['value']
 
-title "Vault Integration Test"
+title "TFC Module Integration Test"
 
-control "vlt-1.0" do
+control "tfc-1.0" do
   impact 0.7
-  title "Test access to GCP secret"
-  desc "Test access to GCP secret"
-  describe http("#{url}/v1/#{namespace}#{path}",
+  title "Validate TFC workspace exists"
+  desc "Validate TFC workspace exists"
+  describe http("#{url}/api/v2/workspaces/#{workspace}",
               method: 'GET',
-              headers: {'X-Vault-Token' => "#{token}"}) do
+              headers: {
+                'Authorization' => "Bearer #{token}",
+                'Content-Type' => 'application/vnd.api+json',
+              }) do
     its('status') { should eq 200 }
   end
 end
 
-control "vlt-2.0" do
+control "tfc-2.0" do
   impact 0.7
-  title "Test health"
-  desc "Test health"
-  describe http("#{url}/v1/sys/health?perfstandbyok=true",
-              method: 'GET') do
+  title "Validate TFC team exists"
+  desc "Validate TFC team exists"
+  describe http("#{url}/api/v2/teams/#{team_id}",
+              method: 'GET',
+              headers: {
+                'Authorization' => "Bearer #{token}",
+                'Content-Type' => 'application/vnd.api+json',
+              }) do
+    its('status') { should eq 200 }
+  end
+end
+
+control "tfc-3.0" do
+  impact 0.7
+  title "Validate TFC workspace variables exist"
+  desc "Validate TFC workspace variables exist"
+  describe http("#{url}/api/v2/workspaces/#{workspace}/vars",
+              method: 'GET',
+              headers: {
+                'Authorization' => "Bearer #{token}",
+                'Content-Type' => 'application/vnd.api+json',
+              }) do
     its('status') { should eq 200 }
   end
 end

@@ -7,7 +7,6 @@ variable "token" {
   description = "TFC Token"
   type        = string
   sensitive   = true
-  default = "***REMOVED***"
 }
 
 variable "organization" {
