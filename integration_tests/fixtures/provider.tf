@@ -18,7 +18,7 @@ variable "approle_secret" {}
 
 provider "vault" {
   auth_login {
-    namespace = "admin/terraform-tfc-workspace"
+    namespace = "vault_namespace"
     path = "auth/approle/login"
 
     parameters = {
