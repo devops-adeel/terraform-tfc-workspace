@@ -4,12 +4,12 @@
  * ```hcl
  *
  * module "terraform_workspace" {
- *   source               = "git::https://github.com/devops-adeel/terraform-tfc-module.git?ref=v0.1.0"
- *   application_name     = local.application_name
- *   vault_namespace      = local.namespace
- *   username             = var.username
- *   vault_address        = var.vault_address
- *   organization         = var.organization
+ *   source               = "git::https://github.com/devops-adeel/terraform-tfc-module.git?ref=v0.2.0"
+ *   application_name     = "adeel-app"
+ *   vault_namespace      = "team-adeel"
+ *   usernames            = ["devops-adeel", "randy"]
+ *   vault_address        = "https://vault.hashicorp.com:8200"
+ *   organization         = "team-adeel"
  *   vault_approle_id     = module.vault_approle.approle_id
  *   vault_approle_secret = module.vault_approle.approle_secret
  *   backend_path         = module.tfc_secrets.backend_path
@@ -23,9 +23,9 @@ resource "tfe_team" "default" {
   organization = var.organization
 }
 
-resource "tfe_team_member" "default" {
-  team_id  = tfe_team.default.id
-  username = var.username
+resource "tfe_team_members" "default" {
+  team_id   = tfe_team.default.id
+  usernames = var.usernames
 }
 
 resource "tfe_workspace" "default" {

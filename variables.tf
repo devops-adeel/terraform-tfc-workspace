@@ -1,6 +1,6 @@
-variable "username" {
-  description = "TFC username"
-  type        = string
+variable "usernames" {
+  description = "TFC usernames"
+  type        = list(string)
 }
 
 variable "application_name" {

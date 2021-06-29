@@ -1,7 +1,7 @@
-output "token" {
-  description = "Terraform workspace token"
-  value       = vault_terraform_cloud_secret_creds.default.token
-}
+# output "token" {
+#   description = "Terraform workspace token"
+#   value       = vault_terraform_cloud_secret_creds.default.token
+# }
 
 output "url" {
   description = "Terraform Cloud URL"
