@@ -47,7 +47,7 @@ jobs:
 
       - name: Terraform Init
         id: init
-        run: terraform init -input=false
+        run: terraform init -upgrade -input=false
         working-directory: integration_tests/fixtures
 
       - name: Terraform Plan
@@ -68,8 +68,10 @@ jobs:
 
       - name: run inspec
         uses: docker://chef/inspec:latest
+        env:
+          CHEF_LICENSE: accept-silent
         with:
-          args: exec integration_tests --chef-license=accept
+          args: exec integration_tests
         continue-on-error: true
 
       - name: Terraform Destroy
