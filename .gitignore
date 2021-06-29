@@ -1,7 +1,6 @@
 ### Terraform ###
 # Local .terraform directories
 **/**/.terraform/*
-**/**/.terraform.lock.hcl
 
 # .tfstate files
 *.tfstate
@@ -31,6 +30,6 @@ override.tf.json
 
 # Local module testing files
 integration_tests/fixtures/module/*.tf
+integration_tests/fixtures/.terraform.lock.hcl
 integration_tests/files/terraform.json
-
-inspec.lock
+integration_tests/inspec.lock
